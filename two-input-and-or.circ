@@ -54,18 +54,47 @@
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
-    <wire from="(290,170)" to="(430,170)"/>
-    <wire from="(290,210)" to="(430,210)"/>
     <wire from="(480,190)" to="(620,190)"/>
+    <wire from="(300,170)" to="(430,170)"/>
+    <wire from="(300,210)" to="(430,210)"/>
+    <comp lib="0" loc="(300,210)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="in2"/>
+    </comp>
+    <comp lib="0" loc="(300,170)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="in1"/>
+    </comp>
+    <comp lib="0" loc="(620,190)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+    </comp>
     <comp lib="1" loc="(480,190)" name="AND Gate">
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(290,170)" name="Constant">
-      <a name="value" val="0x0"/>
+  </circuit>
+  <circuit name="2nd circuit">
+    <a name="circuit" val="2nd circuit"/>
+    <a name="clabel" val=""/>
+    <a name="clabelup" val="east"/>
+    <a name="clabelfont" val="SansSerif plain 12"/>
+    <wire from="(480,190)" to="(620,190)"/>
+    <wire from="(300,170)" to="(430,170)"/>
+    <wire from="(300,210)" to="(430,210)"/>
+    <comp lib="1" loc="(480,190)" name="OR Gate">
+      <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(290,210)" name="Constant"/>
-    <comp lib="0" loc="(620,190)" name="Constant">
+    <comp lib="0" loc="(300,170)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="in1"/>
+    </comp>
+    <comp lib="0" loc="(620,190)" name="Pin">
       <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(300,210)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="in2"/>
     </comp>
   </circuit>
 </project>
