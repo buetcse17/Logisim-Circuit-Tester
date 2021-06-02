@@ -26,8 +26,10 @@ public class TestCase {
 	public void setConstants(Vector<ConstantComponent> constants) {
 		this.constants = constants;
 	}
-	void apply(Circuit circuit){
-		
+	public void apply(Circuit circuit){
+		for(ConstantComponent ccmp : constants){
+			circuit.apply(ccmp);
+		}
 	}
 	
 }

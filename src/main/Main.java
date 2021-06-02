@@ -18,6 +18,7 @@ import circuit.Project;
 import parser.TestCaseJsonParser;
 import parser.TestCaseParser;
 import testcase.TestCase;
+import testrunner.TestRunner;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -36,12 +37,11 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
 
-	public static void runTest(Map<String, String> test, String circFileName , String circuitName ) {
+	public static void runTest(Map<String, String> test, String circFileName, String circuitName) {
 		for (Map.Entry<String, String> data : test.entrySet()) {
 			System.out.println(data.getKey() + data.getValue());
 		}
 
-		
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -53,30 +53,38 @@ public class Main {
 
 			System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
 			NodeList circuits = doc.getElementsByTagName("circuit");
-			
 
-
-			for(int i= 0; i< circuits.getLength(); i++)
-			{
+			for (int i = 0; i < circuits.getLength(); i++) {
 				Node circuit = circuits.item(i);
-				
-				NodeList lst = circuit.getChildNodes();
-				for(int j=0;j<lst.getLength();j++){
-					Node item = lst.item(i);
-					if(item.getNodeName()=="comp")
-					System.out.println(lst.item(i).getNodeName());
+				if (circuit.hasChildNodes()) {
+					System.out.println(circuit.getAttributes().getNamedItem("name") + " has children ");
+
+					NodeList lst = circuit.getChildNodes();
+					for (int j = 0; j < lst.getLength(); j++) {
+						Node item = lst.item(j);
+						
+						if (item.getNodeName() == "comp" ){
+							if(item.hasAttributes())
+							{
+								if(item.getAttributes().getNamedItem("name").getNodeValue() == "Pin")
+								System.out.println("item name " + item.getNodeName());
+								item.getAttributes().getNamedItem("name").setNodeValue("Constant");
+								System.out.println("item is" + item);
+							}
+						}
+					}
 				}
-				System.out.println(circuit.getNodeName());
-				System.out.println(circuit.getAttributes().getNamedItem("name").getNodeValue());
-				NamedNodeMap attr = circuit.getAttributes();
-				for(int j=0;j<attr.getLength();j++)
-				{
-					System.out.println(attr.item(j));
-					Node attrnode = attr.item(j);
-					System.out.println(attrnode);
-				}
+
+				// System.out.println(circuit.getNodeName());
+				// System.out.println(circuit.getAttributes().getNamedItem("name").getNodeValue());
+				// NamedNodeMap attr = circuit.getAttributes();
+				// for (int j = 0; j < attr.getLength(); j++) {
+				// 	System.out.println(attr.item(j));
+				// 	Node attrnode = attr.item(j);
+				// 	System.out.println(attrnode);
+				// }
 			}
-			
+
 			writeXml(doc, "modified.circ");
 
 		} catch (ParserConfigurationException e) {
@@ -91,20 +99,17 @@ public class Main {
 		}
 	}
 
-	public static void writeXml(Document doc , String fileName)
-	{
-		
+	public static void writeXml(Document doc, String fileName) {
+
 		try {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			
+
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource domSource = new DOMSource(doc);
-			
-			StreamResult streamResult  = new StreamResult(new File(fileName));
-			transformer.transform(domSource, streamResult);
-		
 
-		
+			StreamResult streamResult = new StreamResult(new File(fileName));
+			transformer.transform(domSource, streamResult);
+
 		} catch (TransformerConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,10 +117,10 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main2(String[] args) throws IOException, ParseException {
 		JSONParser parser = new JSONParser();
 		String filename = "tests.json";
 		String circFileName = "two-input-and-or.circ";
@@ -126,15 +131,16 @@ public class Main {
 		System.out.println(tests);
 		for (Map<String, String> test : tests) {
 			// System.out.println(test);
-			runTest(test, circFileName,null);
+			runTest(test, circFileName, null);
 		}
 		reader.close();
 	}
-	public static void main2(String[] args) {
+
+	public static void main(String[] args) {
 		String testFileName = "tests.json";
-		String circuitFileName = "two-input-and.circ";
-		String circuitName = null;
-		TestCaseParser inputParser =  new TestCaseJsonParser();
+		String circuitFileName = "two-bit-two-input-and.circ";
+		String circuitName = "main";
+		TestCaseParser inputParser = new TestCaseJsonParser();
 		Vector<TestCase> tests = null;
 		try {
 			tests = inputParser.read(new FileReader(new File(testFileName)));
@@ -142,19 +148,24 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(tests);
+		//System.out.println(tests);
 		Project proj = null;
 
-		try {
-			proj = new Project(circuitFileName);
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (circuitName == null)
-			circuitName = proj.getMainCircuitName();
-		proj.setMainCircuit(circuitName);
-
 		
+		
+		for(TestCase test : tests){
+			
+			try {
+				proj = new Project(circuitFileName);
+			} catch (ParserConfigurationException | SAXException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			TestRunner runner = new TestRunner(test, proj, circuitName);
+			runner.run();
+		}
+
+
 	}
 }

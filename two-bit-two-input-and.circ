@@ -54,32 +54,29 @@
     <a name="clabel" val=""/>
     <a name="clabelup" val="east"/>
     <a name="clabelfont" val="SansSerif plain 12"/>
-    <wire from="(600,190)" to="(620,190)"/>
-    <wire from="(740,190)" to="(740,220)"/>
-    <wire from="(600,190)" to="(600,220)"/>
-    <wire from="(300,170)" to="(430,170)"/>
-    <wire from="(300,210)" to="(430,210)"/>
-    <wire from="(600,220)" to="(740,220)"/>
-    <wire from="(740,190)" to="(750,190)"/>
-    <wire from="(480,190)" to="(600,190)"/>
-    <comp lib="0" loc="(300,210)" name="Pin">
+    <wire from="(610,180)" to="(760,180)"/>
+    <wire from="(360,160)" to="(560,160)"/>
+    <wire from="(360,200)" to="(560,200)"/>
+    <comp lib="0" loc="(760,180)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="2"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="out"/>
+    </comp>
+    <comp lib="1" loc="(610,180)" name="AND Gate">
+      <a name="width" val="2"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(360,200)" name="Pin">
+      <a name="width" val="2"/>
       <a name="tristate" val="false"/>
       <a name="label" val="in2"/>
     </comp>
-    <comp lib="1" loc="(480,190)" name="AND Gate">
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(300,170)" name="Pin">
+    <comp lib="0" loc="(360,160)" name="Pin">
+      <a name="width" val="2"/>
       <a name="tristate" val="false"/>
       <a name="label" val="in1"/>
-    </comp>
-    <comp lib="0" loc="(750,190)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="label" val="out"/>
-    </comp>
-    <comp lib="0" loc="(620,190)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
     </comp>
   </circuit>
 </project>

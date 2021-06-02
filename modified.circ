@@ -56,19 +56,19 @@
     <wire from="(480,190)" to="(620,190)"/>
     <wire from="(300,170)" to="(430,170)"/>
     <wire from="(300,210)" to="(430,210)"/>
-    <comp lib="0" loc="(300,210)" name="Pin">
+    <comp lib="0" loc="(300,210)" name="Constant">
       <a name="tristate" val="false"/>
       <a name="label" val="in2"/>
     </comp>
-    <comp lib="0" loc="(300,170)" name="Pin">
+    <comp lib="0" loc="(300,170)" name="Constant">
       <a name="tristate" val="false"/>
       <a name="label" val="in1"/>
     </comp>
-    <comp lib="0" loc="(620,190)" name="Pin">
+    <comp lib="0" loc="(620,190)" name="Constant">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(480,190)" name="AND Gate">
+    <comp lib="1" loc="(480,190)" name="Constant">
       <a name="inputs" val="2"/>
     </comp>
   </circuit>
@@ -80,18 +80,18 @@
     <wire from="(480,190)" to="(620,190)"/>
     <wire from="(300,170)" to="(430,170)"/>
     <wire from="(300,210)" to="(430,210)"/>
-    <comp lib="1" loc="(480,190)" name="OR Gate">
+    <comp lib="1" loc="(480,190)" name="Constant">
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(300,170)" name="Pin">
+    <comp lib="0" loc="(300,170)" name="Constant">
       <a name="tristate" val="false"/>
       <a name="label" val="in1"/>
     </comp>
-    <comp lib="0" loc="(620,190)" name="Pin">
+    <comp lib="0" loc="(620,190)" name="Constant">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(300,210)" name="Pin">
+    <comp lib="0" loc="(300,210)" name="Constant">
       <a name="tristate" val="false"/>
       <a name="label" val="in2"/>
     </comp>
