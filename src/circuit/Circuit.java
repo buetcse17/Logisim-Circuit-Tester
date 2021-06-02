@@ -1,7 +1,10 @@
 package circuit;
 
+import java.util.Vector;
+
 import org.w3c.dom.Node;
 
+import testcase.ConstantComponent;
 import testcase.TestCase;
 
 public class Circuit {
@@ -10,9 +13,7 @@ public class Circuit {
 	public Circuit(Node circuit) {
 		this.circuit = circuit;
 	}
-
-	void applyTest(TestCase testCase)
-	{
-
+	void apply(ConstantComponent constantComponent){
+		circuit.getAttributes().getNamedItem(constantComponent.getLabel()).setNodeValue(constantComponent.getValue());
 	}
 }

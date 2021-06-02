@@ -15,7 +15,7 @@
       <a name="valign" val="base"/>
     </tool>
   </lib>
-  <main name="2nd circuit"/>
+  <main name="main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
     <a name="simlimit" val="1000"/>

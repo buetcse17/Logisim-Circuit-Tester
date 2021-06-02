@@ -21,11 +21,11 @@ public class Project {
 		XmlParser parser = new XmlParser();
 		document = parser.read(file);
 	}
-	private String getMainCircuitName()
+	public String getMainCircuitName()
 	{
 		return document.getElementsByTagName("main").item(0).getAttributes().getNamedItem("name").getNodeName();
 	}
-	private void setMainCircuit(String circuitName)
+	public void setMainCircuit(String circuitName)
 	{
 		document.getElementsByTagName("main").item(0).getAttributes().getNamedItem("name").setNodeValue(circuitName);
 	}

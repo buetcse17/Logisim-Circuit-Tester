@@ -6,12 +6,18 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import circuit.Project;
+import parser.TestCaseJsonParser;
+import parser.TestCaseParser;
+import testcase.TestCase;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -24,7 +30,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.graalvm.compiler.lir.aarch64.AArch64ControlFlow.StrategySwitchOp;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -49,12 +54,18 @@ public class Main {
 			System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
 			NodeList circuits = doc.getElementsByTagName("circuit");
 			
-			Node main = doc.getElementsByTagName("main").item(0);
-			main.getAttributes().getNamedItem("name").setNodeValue("2nd circuit");
+
 
 			for(int i= 0; i< circuits.getLength(); i++)
 			{
 				Node circuit = circuits.item(i);
+				
+				NodeList lst = circuit.getChildNodes();
+				for(int j=0;j<lst.getLength();j++){
+					Node item = lst.item(i);
+					if(item.getNodeName()=="comp")
+					System.out.println(lst.item(i).getNodeName());
+				}
 				System.out.println(circuit.getNodeName());
 				System.out.println(circuit.getAttributes().getNamedItem("name").getNodeValue());
 				NamedNodeMap attr = circuit.getAttributes();
@@ -118,5 +129,32 @@ public class Main {
 			runTest(test, circFileName,null);
 		}
 		reader.close();
+	}
+	public static void main2(String[] args) {
+		String testFileName = "tests.json";
+		String circuitFileName = "two-input-and.circ";
+		String circuitName = null;
+		TestCaseParser inputParser =  new TestCaseJsonParser();
+		Vector<TestCase> tests = null;
+		try {
+			tests = inputParser.read(new FileReader(new File(testFileName)));
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(tests);
+		Project proj = null;
+
+		try {
+			proj = new Project(circuitFileName);
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (circuitName == null)
+			circuitName = proj.getMainCircuitName();
+		proj.setMainCircuit(circuitName);
+
+		
 	}
 }
