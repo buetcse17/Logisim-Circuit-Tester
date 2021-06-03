@@ -22,9 +22,8 @@ public class Project {
 	}
 
 	Document document;
-	public Project(String fileName) throws ParserConfigurationException, SAXException, IOException
+	public Project(File file) throws ParserConfigurationException, SAXException, IOException
 	{
-		File file = new File(fileName);
 		XmlParser parser = new XmlParser();
 		document = parser.read(file);
 	}
