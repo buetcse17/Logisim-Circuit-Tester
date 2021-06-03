@@ -1,33 +1,30 @@
 package testrunner;
-import java.awt.List;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.xml.transform.TransformerException;
 
 import circuit.Project;
 import testcase.TestCase;
 
-public class TestRunner{
+public class TestRunner {
 	TestCase test;
 	Project proj;
 	String circuitName;
+	File logisimFile;
 
-
-	
-	public TestRunner(TestCase test, Project proj, String circuitName) {
+	public TestRunner(TestCase test, Project proj, String circuitName, File logisimFile) {
 		this.test = test;
 		this.proj = proj;
 		this.circuitName = circuitName;
+		this.logisimFile = logisimFile;
 	}
 
-	public void run()
-	{
+	public void run() {
 		if (this.circuitName == null)
-			this.circuitName 
-			= this.proj.getMainCircuitName();
+			this.circuitName = this.proj.getMainCircuitName();
 		this.proj.setMainCircuit(this.circuitName);
 
 		test.apply(this.proj.getCircuit(this.circuitName));
@@ -41,15 +38,12 @@ public class TestRunner{
 
 			JarExecutor je = new JarExecutor();
 
-			je.executeJar("logisim-generic-2.7.1.jar",args);
+			je.executeJar(logisimFile.getAbsolutePath(), args);
 
 		} catch (TransformerException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		
-
-	}	
+	}
 
 }

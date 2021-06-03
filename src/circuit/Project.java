@@ -29,7 +29,7 @@ public class Project {
 	}
 	public String getMainCircuitName()
 	{
-		return document.getElementsByTagName("main").item(0).getAttributes().getNamedItem("name").getNodeName();
+		return document.getElementsByTagName("main").item(0).getAttributes().getNamedItem("name").getNodeValue();
 	}
 	public void setMainCircuit(String circuitName)
 	{

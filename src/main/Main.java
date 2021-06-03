@@ -3,7 +3,6 @@ package main;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Parameter;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
@@ -23,7 +22,7 @@ import testcase.TestCase;
 import testrunner.TestRunner;
 
 @Command(
-	name = "logisim-circuit-tester", 
+	name = "logisim-circuit-tester",
 	mixinStandardHelpOptions = true, 
 	version = "logisim-circuit-tester 1.0 pre-alpha", 
 	description = "From given logisim *.circ project and input file, "
@@ -31,6 +30,13 @@ import testrunner.TestRunner;
 	sortOptions = false 
 				 )
 public class Main implements Callable<Integer> {
+	@Option(
+		names = {"-l","--logisim"},
+		description = "logisim-generic-2.7.1.jar which will be loaded with modified circuit in every test",
+		required = false ,
+		defaultValue = "logisim-generic-2.7.1.jar"
+	)
+	private File logisimFile;
 	
 	@Option(
 		names = {"-if","--input_format"},
@@ -53,7 +59,7 @@ public class Main implements Callable<Integer> {
 		names = {"-c" ,"--circuit"},
 		description = "circuit name in project",
 		defaultValue = Parameters.NULL_VALUE,
-		required =true
+		required = false
 	)
 	private String circuitName;
 
@@ -99,7 +105,7 @@ public class Main implements Callable<Integer> {
 		e.printStackTrace();
 		}
 
-		TestRunner runner = new TestRunner(test, proj, circuitName);
+		TestRunner runner = new TestRunner(test, proj, circuitName , logisimFile);
 		runner.run();
 
 		}
